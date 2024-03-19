@@ -22,7 +22,7 @@ export default function Home() {
     <main className="min-h-[100vh]">
       <Header />
       <div className="flex flex-col h-[90vh] lg:flex-row lg:items-center lg:justify-center lg:gap-10 lg:w-[75%] lg:m-auto">
-        <div className="mt-5 relative w-3/5">
+        <div className="mt-5 relative lg:w-3/5">
           <div className="w-full flex flex-col justify-between items-center">
             <Image
               src={imageData[currentImg]}
