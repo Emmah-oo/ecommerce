@@ -33,7 +33,7 @@ export default function Home() {
             />
 
             <div className="hidden gap-3 flex-row w-full mt-5 justify-between lg:flex">
-              <div>
+              <div onClick={() => setCurrentImg(0)}>
                 <Image
                   src="/assets/image-product-1-thumbnail.jpg"
                   alt="Image-thumbnail"
@@ -42,7 +42,7 @@ export default function Home() {
                   className="rounded-lg cursor-pointer active:border-[2px] border-[#ff7d1a] transition-all"
                 />
               </div>
-              <div>
+              <div onClick={() => setCurrentImg(1)}>
                 <Image
                   src="/assets/image-product-2-thumbnail.jpg"
                   alt="Image-thumbnail"
@@ -51,7 +51,7 @@ export default function Home() {
                   className="rounded-lg cursor-pointer active:border-[2px] border-[#ff7d1a] transition-all"
                 />
               </div>
-              <div>
+              <div onClick={() => setCurrentImg(2)}>
                 <Image
                   src="/assets/image-product-3-thumbnail.jpg"
                   alt="Image-thumbnail"
@@ -60,7 +60,7 @@ export default function Home() {
                   className="rounded-lg cursor-pointer active:border-[2px] border-[#ff7d1a] transition-all"
                 />
               </div>
-              <div>
+              <div onClick={() => setCurrentImg(3)}>
                 <Image
                   src="/assets/image-product-4-thumbnail.jpg"
                   alt="Image-thumbnail"
