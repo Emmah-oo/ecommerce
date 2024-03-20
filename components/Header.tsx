@@ -12,9 +12,9 @@ const Header = () => {
   };
 
   return (
-    <header className="flex justify-between items-center relative px-4 h-16 w-full lg:py-12 lg:px-20">
+    <header className="flex justify-between items-center relative px-4 pt-4 h-16 w-full lg:py-12 lg:px-20">
       <div className="w-full flex items-center gap-3">
-        <div className="flex z-20 sm:hidden" onClick={handleNav}>
+        <div className="flex z-30 sm:hidden" onClick={handleNav}>
           {nav ? (
             <HiOutlineX className="text-3xl cursor-pointer" />
           ) : (
@@ -51,7 +51,7 @@ const Header = () => {
         {/* Mobile Nav */}
         <ul
           className={`flex fixed w-[60%] flex-col left-0 top-0 items-start 
-      pt-28 pl-5 h-full gap-4 bg-white z-10 sm:hidden transition-all duration-300 ${
+      pt-28 pl-5 h-full gap-4 bg-white z-20 sm:hidden transition-all duration-300 ${
         nav ? "translate-x-0 drop-shadow-xl" : "-translate-x-full"
       }`}
         >
@@ -63,7 +63,7 @@ const Header = () => {
         </ul>
         {nav && (
           <div
-            className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-0"
+            className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-10"
             onClick={handleNav}
           ></div>
         )}
