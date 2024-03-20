@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import DisplayImage from "./DisplayImage";
+import CarouselControls from "./CarouselControls";
 
 const ImageModal = ({
   isOpen,
@@ -24,10 +25,11 @@ const ImageModal = ({
       />
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black opacity-70 -z-10"
+          className="fixed inset-0 bg-black opacity-80 -z-10"
           onClick={() => setIsOpen(false)}
         ></div>
       )}
+      <CarouselControls currentImg={currentImg} setCurrentImg={setCurrentImg} display={true} />
     </div>
   );
 };

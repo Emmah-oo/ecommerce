@@ -1,27 +1,18 @@
 "use client";
 import Image from "next/image";
 import Header from "@/components/Header";
-import { imageData } from "@/lib/data";
 import { productData } from "@/lib/data";
 import { useState } from "react";
 
 import ImageModal from "@/components/ImageModal";
 import DisplayImage from "@/components/DisplayImage";
+import CarouselControls from "@/components/CarouselControls";
 
 export default function Home() {
   const [productCount, setProductCount] = useState(0);
   const [currentImg, setCurrentImg] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
-  const nextImg = () => {
-    setCurrentImg((prevIndex) => (prevIndex + 1) % imageData.length);
-  };
-
-  const prevImg = () => {
-    setCurrentImg((prevIndex) =>
-      prevIndex === 0 ? imageData.length - 1 : prevIndex - 1
-    );
-  };
   return (
     <main className="min-h-[100vh]">
       {isOpen && <ImageModal isOpen={isOpen} setIsOpen={setIsOpen} currentImg={currentImg} setCurrentImg={setCurrentImg} />}
@@ -32,20 +23,7 @@ export default function Home() {
             <DisplayImage isOpen={isOpen} setIsOpen={setIsOpen} currentImg={currentImg} setCurrentImg={setCurrentImg} />
           </div>
 
-          <div className="absolute top-[50%] flex items-center justify-between w-full px-4 lg:hidden">
-            <div
-              className=" bg-white rounded-[100%] flex items-center justify-center cursor-pointer"
-              onClick={prevImg}
-            >
-              <h1 className="text-2xl font-bold px-3 pb-1">{"<"}</h1>
-            </div>
-            <div
-              className=" bg-white rounded-[100%] flex items-center justify-center cursor-pointer"
-              onClick={nextImg}
-            >
-              <h1 className="px-3 pb-1 text-2xl font-bold">{">"}</h1>
-            </div>
-          </div>
+          <CarouselControls currentImg={currentImg} setCurrentImg={setCurrentImg} />
         </div>
         <div>
           {productData.map((product, idx) => (
