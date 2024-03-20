@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import { imageData } from "@/lib/data";
 import { productData } from "@/lib/data";
 import { useState } from "react";
+import { thumbnailData } from "@/lib/data";
 
 export default function Home() {
   const [productCount, setProductCount] = useState(0);
@@ -33,42 +34,33 @@ export default function Home() {
             />
 
             <div className="hidden gap-3 flex-row w-full mt-5 justify-between lg:flex">
-              <div onClick={() => setCurrentImg(0)}>
-                <Image
-                  src="/assets/image-product-1-thumbnail.jpg"
-                  alt="Image-thumbnail"
-                  height={80}
-                  width={80}
-                  className="rounded-lg cursor-pointer active:border-[2px] border-[#ff7d1a] transition-all"
-                />
-              </div>
-              <div onClick={() => setCurrentImg(1)}>
-                <Image
-                  src="/assets/image-product-2-thumbnail.jpg"
-                  alt="Image-thumbnail"
-                  height={80}
-                  width={80}
-                  className="rounded-lg cursor-pointer active:border-[2px] border-[#ff7d1a] transition-all"
-                />
-              </div>
-              <div onClick={() => setCurrentImg(2)}>
-                <Image
-                  src="/assets/image-product-3-thumbnail.jpg"
-                  alt="Image-thumbnail"
-                  height={80}
-                  width={80}
-                  className="rounded-lg cursor-pointer active:border-[2px] border-[#ff7d1a] transition-all"
-                />
-              </div>
-              <div onClick={() => setCurrentImg(3)}>
-                <Image
-                  src="/assets/image-product-4-thumbnail.jpg"
-                  alt="Image-thumbnail"
-                  height={80}
-                  width={80}
-                  className="rounded-lg cursor-pointer active:border-[2px] border-[#ff7d1a] transition-all"
-                />
-              </div>
+              {thumbnailData.map((data, index) => (
+                <div
+                  onClick={() => {
+                    setCurrentImg(data.index);
+                    thumbnailData.forEach((item) => {
+                      if (item.index === data.index) {
+                        item.isActive = true;
+                      } else {
+                        item.isActive = false;
+                      }
+                    });
+                  }}
+                  key={index}
+                >
+                  <Image
+                    src={data.imgUrl}
+                    alt="Image-thumbnail"
+                    height={80}
+                    width={80}
+                    className={`rounded-lg cursor-pointer hover:opacity-50 ${
+                      data.isActive
+                        ? "border-[2px] border-[#ff7d1a] opacity-50"
+                        : ""
+                    } transition-all duration-300 ease-in-out`}
+                  />
+                </div>
+              ))}
             </div>
           </div>
 
@@ -93,7 +85,7 @@ export default function Home() {
               <h1 className="text-xl text-[#ff7d1a] my-3">{product.owner}</h1>
               <h1 className="mb-3 font-bold text-2xl">{product.title}</h1>
               <p className="mb-3">{product.description}</p>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between lg:flex-col lg:items-start">
                 <div className="flex items-center gap-3">
                   <h1 className="font-bold text-2xl">
                     {product.discountPrice}
@@ -110,33 +102,35 @@ export default function Home() {
               </div>
             </div>
           ))}
-          <div className="flex items-center justify-between mx-4 mt-5 p-3 bg-gray-50 rounded-lg">
-            <div
-              className="text-2xl text-[#ff7d1a] cursor-pointer"
-              onClick={() => {
-                if (productCount <= 0) return;
-                setProductCount(productCount - 1);
-              }}
-            >
-              -
+          <div className="flex flex-col lg:flex-row w-full">
+            <div className="flex items-center justify-between mx-4 mt-5 p-3 bg-gray-50 rounded-lg lg:w-[40%]">
+              <div
+                className="text-2xl text-[#ff7d1a] cursor-pointer"
+                onClick={() => {
+                  if (productCount <= 0) return;
+                  setProductCount(productCount - 1);
+                }}
+              >
+                -
+              </div>
+              <div className="font-bold">{productCount}</div>
+              <div
+                className="text-2xl text-[#ff7d1a] cursor-pointer"
+                onClick={() => setProductCount(productCount + 1)}
+              >
+                +
+              </div>
             </div>
-            <div className="font-bold">{productCount}</div>
-            <div
-              className="text-2xl text-[#ff7d1a] cursor-pointer"
-              onClick={() => setProductCount(productCount + 1)}
-            >
-              +
-            </div>
-          </div>
 
-          <div className="flex items-center justify-center gap-3 my-5 bg-[#ff7d1a] drop-shadow-2xl shadow-[#ff7d1a] mx-4 py-3 rounded-lg text-white">
-            <Image
-              src="/assets/icon-cart.svg"
-              alt="cart"
-              width={20}
-              height={20}
-            />
-            <button>Add to Cart</button>
+            <div className="flex items-center justify-center gap-3 my-5 cursor-pointer bg-[#ff7d1a] drop-shadow-2xl shadow-[#ff7d1a] mx-4 py-3 rounded-lg text-white lg:w-[60%] lg:mb-0">
+              <Image
+                src="/assets/icon-cart.svg"
+                alt="cart"
+                width={20}
+                height={20}
+              />
+              <button>Add to Cart</button>
+            </div>
           </div>
         </div>
       </div>
