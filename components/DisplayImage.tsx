@@ -14,7 +14,7 @@ const DisplayImage = ({
   setCurrentImg: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   return (
-    <div className="cursor-pointer">
+    <div className="cursor-pointer w-full">
       <Image
         onClick={() => setIsOpen(true)}
         src={imageData[currentImg]}

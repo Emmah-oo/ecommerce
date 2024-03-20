@@ -7,23 +7,72 @@ import { useState } from "react";
 import ImageModal from "@/components/ImageModal";
 import DisplayImage from "@/components/DisplayImage";
 import CarouselControls from "@/components/CarouselControls";
+import { imageData } from "@/lib/data";
+
+import { CartType } from "@/lib/definitions";
 
 export default function Home() {
   const [productCount, setProductCount] = useState(0);
   const [currentImg, setCurrentImg] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [cart, setCart] = useState<CartType[]>([]);
+
+  const addToCart = (
+    productCount: number,
+    productImg: string,
+    title: string,
+    price: number
+  ) => {
+    if (productCount === 0) {
+      alert("Select a product");
+      return;
+    }
+    const id = Math.floor(Math.random() * 100);
+    const newCartItem: CartType = {
+      id,
+      productCount,
+      productImg,
+      title,
+      price,
+    };
+
+    setCart((prevCart) => [...prevCart, newCartItem]);
+
+    console.log(cart);
+  };
+
+  const deleteFromCart = (itemId: number): void => {
+    const cartData: CartType[] = cart.filter((item) => item.id !== itemId);
+    setCart(cartData);
+    console.log("working");
+  };
 
   return (
     <main className="min-h-[100vh]">
-      {isOpen && <ImageModal isOpen={isOpen} setIsOpen={setIsOpen} currentImg={currentImg} setCurrentImg={setCurrentImg} />}
-      <Header />
+      {isOpen && (
+        <ImageModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          currentImg={currentImg}
+          setCurrentImg={setCurrentImg}
+        />
+      )}
+      <Header cart={cart} deleteFromCart={deleteFromCart} />
       <div className="flex flex-col h-[90vh] lg:flex-row lg:items-center lg:justify-center lg:gap-10 lg:w-[75%] lg:m-auto">
         <div className="mt-5 relative lg:w-3/5">
           <div className="w-full flex flex-col justify-between items-center">
-            <DisplayImage isOpen={isOpen} setIsOpen={setIsOpen} currentImg={currentImg} setCurrentImg={setCurrentImg} />
+            <DisplayImage
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              currentImg={currentImg}
+              setCurrentImg={setCurrentImg}
+            />
           </div>
 
-          <CarouselControls currentImg={currentImg} setCurrentImg={setCurrentImg} />
+          <CarouselControls
+            currentImg={currentImg}
+            setCurrentImg={setCurrentImg}
+          />
         </div>
         <div>
           {productData.map((product, idx) => (
@@ -34,7 +83,7 @@ export default function Home() {
               <div className="flex items-center justify-between lg:flex-col lg:items-start">
                 <div className="flex items-center gap-3">
                   <h1 className="font-bold text-2xl">
-                    {product.discountPrice}
+                    ${product.discountPrice}
                   </h1>
                   <div className="bg-[#ffdabd] py-1 px-2 text-[0.8rem] font-bold text-[#ff7d1a] rounded-md">
                     <h1>{product.discountPercent}</h1>
@@ -42,7 +91,7 @@ export default function Home() {
                 </div>
                 <div>
                   <h1 className="text-gray-600 line-through">
-                    {product.initialPrice}
+                    ${product.initialPrice}
                   </h1>
                 </div>
               </div>
@@ -68,7 +117,17 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="flex items-center justify-center gap-3 my-5 cursor-pointer bg-[#ff7d1a] drop-shadow-2xl shadow-[#ff7d1a] mx-4 py-3 rounded-lg text-white lg:w-[60%] lg:mb-0">
+            <div
+              className="flex items-center justify-center gap-3 my-5 cursor-pointer bg-[#ff7d1a] drop-shadow-2xl shadow-[#ff7d1a] mx-4 py-3 rounded-lg text-white lg:w-[60%] lg:mb-0"
+              onClick={() =>
+                addToCart(
+                  productCount,
+                  imageData[currentImg],
+                  productData[0].title,
+                  productData[0].discountPrice
+                )
+              }
+            >
               <Image
                 src="/assets/icon-cart.svg"
                 alt="cart"

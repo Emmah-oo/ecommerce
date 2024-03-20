@@ -4,8 +4,13 @@ import Image from "next/image";
 import { HiOutlineX } from "react-icons/hi";
 import { AiOutlineMenu } from "react-icons/ai";
 import Cart from "./Cart";
+import { CartType } from "@/lib/definitions";
 
-const Header = () => {
+interface HeaderProps {
+  cart: CartType[];
+  deleteFromCart: (itemId: number) => void;
+}
+const Header = ({ cart, deleteFromCart }: HeaderProps) => {
   const [nav, setNav] = useState(false);
   const handleNav = () => {
     setNav(!nav);
@@ -70,7 +75,7 @@ const Header = () => {
       </div>
 
       <div className="flex items-center gap-5">
-        <Cart />
+        <Cart cart={cart} deleteFromCart={deleteFromCart} />
         <div className="cursor-pointer">
           <Image
             src="/assets/image-avatar.png"
