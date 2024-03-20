@@ -4,11 +4,14 @@ import Header from "@/components/Header";
 import { imageData } from "@/lib/data";
 import { productData } from "@/lib/data";
 import { useState } from "react";
-import { thumbnailData } from "@/lib/data";
+
+import ImageModal from "@/components/ImageModal";
+import DisplayImage from "@/components/DisplayImage";
 
 export default function Home() {
   const [productCount, setProductCount] = useState(0);
   const [currentImg, setCurrentImg] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
 
   const nextImg = () => {
     setCurrentImg((prevIndex) => (prevIndex + 1) % imageData.length);
@@ -21,47 +24,12 @@ export default function Home() {
   };
   return (
     <main className="min-h-[100vh]">
+      {isOpen && <ImageModal isOpen={isOpen} setIsOpen={setIsOpen} currentImg={currentImg} setCurrentImg={setCurrentImg} />}
       <Header />
       <div className="flex flex-col h-[90vh] lg:flex-row lg:items-center lg:justify-center lg:gap-10 lg:w-[75%] lg:m-auto">
         <div className="mt-5 relative lg:w-3/5">
           <div className="w-full flex flex-col justify-between items-center">
-            <Image
-              src={imageData[currentImg]}
-              width={1000}
-              height={1000}
-              alt="Product"
-              className="w-[100%] object-contain lg:rounded-md"
-            />
-
-            <div className="hidden gap-3 flex-row w-full mt-5 justify-between lg:flex">
-              {thumbnailData.map((data, index) => (
-                <div
-                  onClick={() => {
-                    setCurrentImg(data.index);
-                    thumbnailData.forEach((item) => {
-                      if (item.index === data.index) {
-                        item.isActive = true;
-                      } else {
-                        item.isActive = false;
-                      }
-                    });
-                  }}
-                  key={index}
-                >
-                  <Image
-                    src={data.imgUrl}
-                    alt="Image-thumbnail"
-                    height={80}
-                    width={80}
-                    className={`rounded-lg cursor-pointer hover:opacity-50 ${
-                      data.isActive
-                        ? "border-[2px] border-[#ff7d1a] opacity-50"
-                        : ""
-                    } transition-all duration-300 ease-in-out`}
-                  />
-                </div>
-              ))}
-            </div>
+            <DisplayImage isOpen={isOpen} setIsOpen={setIsOpen} currentImg={currentImg} setCurrentImg={setCurrentImg} />
           </div>
 
           <div className="absolute top-[50%] flex items-center justify-between w-full px-4 lg:hidden">
@@ -80,8 +48,8 @@ export default function Home() {
           </div>
         </div>
         <div>
-          {productData.map((product) => (
-            <div className="px-4">
+          {productData.map((product, idx) => (
+            <div className="px-4" key={idx}>
               <h1 className="text-xl text-[#ff7d1a] my-3">{product.owner}</h1>
               <h1 className="mb-3 font-bold text-2xl">{product.title}</h1>
               <p className="mb-3">{product.description}</p>
