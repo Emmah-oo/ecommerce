@@ -50,7 +50,9 @@ const Cart = ({ cart, deleteFromCart }: CartProps) => {
                         <h1 className="text-gray-600">${item.price}</h1>
                         <h2 className="text-gray-600">x</h2>
                         <h1 className="text-gray-600">{item.productCount}</h1>
-                        <p className="font-bold">${item.productCount * item.price}</p>
+                        <p className="font-bold">
+                          ${item.productCount * item.price}
+                        </p>
                       </div>
                     </div>
                     <div
